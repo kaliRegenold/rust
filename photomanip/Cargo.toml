@@ -1,0 +1,6 @@
+[package]
+name = "photomanip"
+version = "0.1.0"
+authors = ["kali <kaliregenold@yahoo.com>"]
+
+[dependencies]
