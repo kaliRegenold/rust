@@ -4,7 +4,10 @@
 @fileDescription:
  This file contains ...
 */
+extern crate image;
+use image::GenericImageView;
 
-impl greyscale {
 
+pub fn greyScale( image ) {
+    colorband[i][j] = 255 – colorband[i][j];
 }
