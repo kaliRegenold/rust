@@ -5,11 +5,11 @@
  This file is the entrypoint to the photomainpulation program.
 */
 
-extern crate image;
-
 use std::io;
 use std::io::Write;
 use std::fs::File;
+
+mod image;
 
 fn handle_implementation(_choice: i32) {
     match _choice {
@@ -118,6 +118,9 @@ fn main() {
     io::stdin().read_line(&mut filename).expect("Failed to read line");
     // Remove trailing newline
     filename.pop();
+        
+    let mut file = File::open(filename).unwrap();
+    let image_in = image::image::make_image(& mut file);
 
     println!("Press 1 for reimplementation,\n\
             Press 2 for STL");
