@@ -11,6 +11,7 @@ use std::fs::File;
 use std::error::Error;
 
 mod image;
+mod negate;
 
 use image::Image;
 
@@ -19,7 +20,7 @@ fn handle(_choice: &str, img: & mut Image) {
         "1" => println!("Do sharpen."),
         "2" => println!("Do smooth."),
         "3" => println!("Do greyscale."),
-        "4" => println!("Do negate."),
+        "4" => img.negate(),
         "5" => println!("Do brighten."),
         "6" => println!("Do contrast."),
         "7" => println!("Quit."),

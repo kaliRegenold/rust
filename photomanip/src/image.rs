@@ -12,16 +12,16 @@ use std::io::Write;
 
 
 pub struct Pixel {
-    r: u8,
-    g: u8,
-    b: u8,
+    pub r: u8,
+    pub g: u8,
+    pub b: u8,
 }
 
 pub struct Image {
     width: u32,
     height: u32,
     max_color_value: u8,
-    pixels: Vec<Pixel>,
+    pub pixels: Vec<Pixel>,
 }
 
 impl Image {
