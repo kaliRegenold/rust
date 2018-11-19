@@ -18,8 +18,8 @@ pub struct Pixel {
 }
 
 pub struct Image {
-    width: u32,
-    height: u32,
+    pub width: u32,
+    pub height: u32,
     max_color_value: u8,
     pub pixels: Vec<Pixel>,
 }

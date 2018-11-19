@@ -14,13 +14,14 @@ mod image;
 mod negate;
 mod greyscale;
 mod brighten;
+mod sharpen;
 
 use image::Image;
 
 fn handle(_choice: &str, img: & mut Image) {
     let mut value : String = String::new();
     match _choice {
-        "1" => println!("Do sharpen."),
+        "1" => img.sharpen(),
         "2" => println!("Do smooth."),
         "3" => println!("Do greyscale."),
         "4" => img.negate(),
