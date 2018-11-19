@@ -105,10 +105,9 @@ fn menu() {
 }
 
 fn main() {
-    let mut input = String::new();
     let mut input_imp = String::new();
     let mut filename = String::new();
-    let mut choice_imp: i32 = 0;
+    let choice_imp: i32;
 
     // Prompt for file name
     print!("Enter filename: ");
@@ -120,7 +119,7 @@ fn main() {
     filename.pop();
         
     let mut file = File::open(filename).unwrap();
-    let image_in = image::image::make_image(& mut file);
+    let _image_in = image::Image::make_image(& mut file);
 
     println!("Press 1 for reimplementation,\n\
             Press 2 for STL");

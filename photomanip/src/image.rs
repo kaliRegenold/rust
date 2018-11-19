@@ -16,21 +16,21 @@ pub struct Pixel {
     b: u8,
 }
 
-pub struct image {
+pub struct Image {
     width: u32,
     height: u32,
     pixels: Vec<Pixel>,
 }
 
-impl image {
+impl Image {
     
-    pub fn make_image(file: &mut File) -> image {
+    pub fn make_image(file: &mut File) -> Image {
 
         // to hold contents of the file in string form
         let mut contents = String::new();
 
         // put contents of file into contents string
-        file.read_to_string(&mut contents);
+        file.read_to_string(&mut contents).expect("could not read file");
 
         // vector to hold contents of the file, split on newlines
         let contents : Vec<&str> = contents.split("\n").collect();
@@ -53,7 +53,7 @@ impl image {
         counter += 1;
 
         // MAX COLOR VALUE
-        let max_color_value = contents[counter].parse::<u8>().unwrap();
+        let _max_color_value = contents[counter].parse::<u8>().unwrap();
         counter += 1;
 
         // number of lines of color values
@@ -74,7 +74,7 @@ impl image {
         }
 
         // make and return the image
-        image {
+        Image {
             width: width,
             height: height,
             pixels: pixels,
