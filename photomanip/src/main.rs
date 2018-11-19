@@ -13,16 +13,24 @@ use std::error::Error;
 mod image;
 mod negate;
 mod greyscale;
+mod brighten;
 
 use image::Image;
 
 fn handle(_choice: &str, img: & mut Image) {
+    let mut value : String = String::new();
     match _choice {
         "1" => println!("Do sharpen."),
         "2" => println!("Do smooth."),
         "3" => println!("Do greyscale."),
         "4" => img.negate(),
-        "5" => println!("Do brighten."),
+        "5" => {
+                get_input("Value (-255, 255): ", & mut value); 
+                let value = value.parse::<i16>().unwrap();
+                println!("here!");
+                let _ = io::stdout().flush();
+                img.brighten(value)
+            },
         "6" => println!("Do contrast."),
         "7" => println!("Quit."),
         _ => println!("WRONG."),
