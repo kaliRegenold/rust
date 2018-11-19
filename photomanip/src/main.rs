@@ -8,85 +8,21 @@
 use std::io;
 use std::io::Write;
 use std::fs::File;
+use std::error::Error;
 
 mod image;
 
-fn handle_implementation(_choice: i32) {
+use image::Image;
+
+fn handle(_choice: &str, img: & mut Image) {
     match _choice {
-        1 => our_implementation(),
-        2 => stl_implementation(),
-        _ => println!("WRONG."),
-    }
-}
-
-fn stl_implementation(){
-    println!("STL implementation");
-    let mut input = String::new();
-    let mut choice: i32 = 0;
-    // Make do while
-    while choice != 7 {
-        // Print menu
-        menu();
-        io::stdout().flush().unwrap();
-
-        // Read in user input
-        io::stdin().read_line(&mut input).expect("Failed to read line");
-        // Remove trailing newline
-        input.pop();
-        // Convert to int
-        choice = input.parse::<i32>().unwrap();
-        // Clear input string
-        input = "".to_string();
-
-        handle_image_stl(choice);
-    }
-}
-
-fn our_implementation(){
-    println!("Our implementation");
-    let mut input = String::new();
-    let mut choice: i32 = 0;
-    // Make do while
-    while choice != 7 {
-        // Print menu
-        menu();
-        io::stdout().flush().unwrap();
-
-        // Read in user input
-        io::stdin().read_line(&mut input).expect("Failed to read line");
-        // Remove trailing newline
-        input.pop();
-        // Convert to int
-        choice = input.parse::<i32>().unwrap();
-        // Clear input string
-        input = "".to_string();
-
-        handle(choice);
-    }
-}
-
-fn handle(_choice: i32) {
-    match _choice {
-        1 => println!("Do sharpen."),
-        2 => println!("Do smooth."),
-        3 => println!("Do greyscale."),
-        4 => println!("Do negate."),
-        5 => println!("Do brighten."),
-        6 => println!("Do contrast."),
-        7 => println!("Quit."),
-        _ => println!("WRONG."),
-    }
-}
-
-fn handle_image_stl(_choice: i32) {
-    match _choice {
-        1 => println!("Do sharpen."),
-        2 => println!("Do smooth."),
-        3 => println!("Do greyscale."),
-        4 => println!("Do negate."),
-        5 => println!("Do brighten."),
-        6 => println!("Do contrast."),
-        7 => println!("Quit."),
+        "1" => println!("Do sharpen."),
+        "2" => println!("Do smooth."),
+        "3" => println!("Do greyscale."),
+        "4" => println!("Do negate."),
+        "5" => println!("Do brighten."),
+        "6" => println!("Do contrast."),
+        "7" => println!("Quit."),
         _ => println!("WRONG."),
     }
 }
@@ -99,42 +35,45 @@ fn menu() {
     println!("5\tBrighten");
     println!("6\tContrast");
     println!("7\tQuit");
-    print!("Choose a function: ");
-    io::stdout().flush().unwrap();
+}
+
+fn get_input(text: &str, input : & mut String) {
+    print!("{}", text);
     let _ = io::stdout().flush();
+    io::stdin().read_line(input).expect("Failed to read line");
+    input.pop();
 }
 
 fn main() {
-    let mut input_imp = String::new();
-    let mut filename = String::new();
-    let choice_imp: i32;
+    let mut input_imp: String;
+    let mut in_filename: String = String::new();
+    let mut out_filename: String = String::new();
+    let mut do_compare: String = String::new();
+    let mut in_file: File;
+    let mut out_file: File;
+    let mut choice: String = String::new();
 
-    // Prompt for file name
-    print!("Enter filename: ");
-    let _ = io::stdout().flush();
+    get_input("Enter input filename: ", & mut in_filename);
+    in_filename = "../../images/puppiesA.ppm".to_string();
+    in_file = File::open(in_filename).unwrap();
 
-    // Read in filename
-    io::stdin().read_line(&mut filename).expect("Failed to read line");
-    // Remove trailing newline
-    filename.pop();
-        
-    let mut file = File::open(filename).unwrap();
-    let _image_in = image::Image::make_image(& mut file);
+    get_input("Enter output filename: ", & mut out_filename);
+    out_filename = "../../images/out.ppm".to_string();
 
-    println!("Press 1 for reimplementation,\n\
-            Press 2 for STL");
-    io::stdout().flush().unwrap();
-    // Read in user input
-    io::stdin().read_line(&mut input_imp).expect("Failed to read line");
-    // Remove trailing newline
-    input_imp.pop();
-    // Convert to int
-    choice_imp = input_imp.parse::<i32>().unwrap();
+    out_file = match File::create(& out_filename) {
+        Err(why) => panic!("couldn't create output file: {}", why.description()),
+        Ok(file) => file,
+    };
 
-    handle_implementation(choice_imp);
 
-    // Replace this with a hookup to the Image class
-    // Open file
-    //let mut _f = File::open(filename).expect("file not found");
+    get_input("Compare to STL? (y/N) ", & mut do_compare);
+    // do something about this or whatever
+    menu();
+
+    get_input("Choose a function: ", & mut choice);
+
+    let mut image_in = image::Image::make_image(& mut in_file);
+    
+    handle(&choice, & mut image_in);
 
 }
