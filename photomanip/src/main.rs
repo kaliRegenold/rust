@@ -12,6 +12,7 @@ use std::error::Error;
 
 mod image;
 mod negate;
+mod greyscale;
 
 use image::Image;
 
