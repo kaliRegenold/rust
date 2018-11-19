@@ -7,6 +7,7 @@
 
 use std::fs::File;
 use std::io::Read;
+use std::io::Write;
 
 
 
@@ -19,12 +20,13 @@ pub struct Pixel {
 pub struct Image {
     width: u32,
     height: u32,
+    max_color_value: u8,
     pixels: Vec<Pixel>,
 }
 
 impl Image {
     
-    pub fn make_image(file: &mut File) -> Image {
+    pub fn new(file: &mut File) -> Image {
 
         // to hold contents of the file in string form
         let mut contents = String::new();
@@ -53,7 +55,7 @@ impl Image {
         counter += 1;
 
         // MAX COLOR VALUE
-        let _max_color_value = contents[counter].parse::<u8>().unwrap();
+        let max_color_value = contents[counter].parse::<u8>().unwrap();
         counter += 1;
 
         // number of lines of color values
@@ -77,7 +79,21 @@ impl Image {
         Image {
             width: width,
             height: height,
+            max_color_value: max_color_value,
             pixels: pixels,
         }
     }
+
+    pub fn write(&self, file: & mut File) {
+        file.write_all(b"P3\n");
+        let w_h_line = format!("{} {}\n", self.width, self.height);
+        file.write_all(w_h_line.as_bytes());
+        file.write_all((self.max_color_value.to_string() + "\n").as_bytes());
+        for p in &self.pixels {
+            file.write_all((p.r.to_string() + "\n").as_bytes());
+            file.write_all((p.g.to_string() + "\n").as_bytes());
+            file.write_all((p.b.to_string() + "\n").as_bytes());
+        }
+    }
+
 }

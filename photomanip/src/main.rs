@@ -72,8 +72,9 @@ fn main() {
 
     get_input("Choose a function: ", & mut choice);
 
-    let mut image_in = image::Image::make_image(& mut in_file);
+    let mut img = image::Image::new(& mut in_file);
     
-    handle(&choice, & mut image_in);
+    handle(&choice, & mut img);
 
+    img.write(& mut out_file);
 }
