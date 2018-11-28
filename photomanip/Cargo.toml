@@ -5,3 +5,4 @@ authors = ["kali <kaliregenold@yahoo.com>", "joe <josef.ceritelli@mines.sdsmt.ed
 
 [dependencies]
 image = "*"
+rayon = "1.0.3"

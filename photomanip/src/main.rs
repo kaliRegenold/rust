@@ -4,6 +4,7 @@
 @fileDescription:
  This file is the entrypoint to the photomainpulation program.
 */
+extern crate rayon;
 
 use std::io;
 use std::io::Write;
@@ -56,7 +57,6 @@ fn get_input(text: &str, input : & mut String) {
 }
 
 fn main() {
-    let mut input_imp: String;
     let mut in_filename: String = String::new();
     let mut out_filename: String = String::new();
     let mut do_compare: String = String::new();
@@ -65,11 +65,11 @@ fn main() {
     let mut choice: String = String::new();
 
     get_input("Enter input filename: ", & mut in_filename);
-    in_filename = "../../images/puppiesA.ppm".to_string();
+    in_filename = "puppiesA.ppm".to_string();
     in_file = File::open(in_filename).unwrap();
 
     get_input("Enter output filename: ", & mut out_filename);
-    out_filename = "../../images/out.ppm".to_string();
+    out_filename = "out.ppm".to_string();
 
     out_file = match File::create(& out_filename) {
         Err(why) => panic!("couldn't create output file: {}", why.description()),
